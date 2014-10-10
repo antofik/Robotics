@@ -6,5 +6,6 @@ SUBDIRS += \
     MovementLibrary \
     WheelMotorController \
     WheelMotorControllerTest \
-    MovementLibraryTest
+    MovementLibraryTest \
+    Robot
 
