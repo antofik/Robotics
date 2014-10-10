@@ -33,6 +33,7 @@ signals:
     void EnemyPuckCollected();
 
 public slots:
+
     /**
      * @brief Start module
      */
