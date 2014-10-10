@@ -10,33 +10,54 @@ class PuckController : public QObject
 public:
     explicit PuckController(QObject *parent = 0, bool myColorIsRed = true);
 
-
-signals:
     /**
-     * Triggers when my puck collected
-     */
-    void MyPuckCollected();
-
-    /**
-     * Triggers when new enemy puck collected
-     */
-    void EnemyPuckCollected();
-
-
-    /**
-     * Count of already collected my pucks
+     * @brief Count of already collected my pucks
      */
     int getMyPucksCount();
 
     /**
-     * Count of already collected enemy pucks
+     * @brief Count of already collected enemy pucks
      */
     int getEnemyPuckCount();
 
+signals:
+
+    /**
+     * @brief Triggers when my puck collected
+     */
+    void MyPuckCollected();
+
+    /**
+     * @brief Triggers when new enemy puck collected
+     */
+    void EnemyPuckCollected();
+
+public slots:
+    /**
+     * @brief Start module
+     */
+    void start();
+
+    /**
+     * @brief Stop module
+     */
+    void stop();
+
+    /**
+     * @brief Lift up the flap, releasing my pucks
+     */
+    void releaseMyPucks();
+
+    /**
+     * @brief List up the flap, releasing enemy pucks
+     */
+    void releaseEnemyPucks();
+
 private:
-    bool myColorIsRed;
-    int myPucksCount;
-    int enemyPuckCount;
+    bool _isActive;
+    bool _myColorIsRed;
+    int _myPucksCount;
+    int _enemyPuckCount;
 
 };
 

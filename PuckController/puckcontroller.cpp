@@ -3,15 +3,27 @@
 
 PuckController::PuckController(QObject *parent, bool myColorIsRed) : QObject(parent)
 {
-    this->myColorIsRed = myColorIsRed;
+    _myColorIsRed = myColorIsRed;
 }
 
 int PuckController::getMyPucksCount()
 {
-    return this->myPucksCount;
+    return _myPucksCount;
 }
 
 int PuckController::getEnemyPuckCount()
 {
-    return this->enemyPuckCount;
+    return _enemyPuckCount;
+}
+
+void PuckController::start()
+{
+    _isActive = true;
+    // TODO
+}
+
+void PuckController::stop()
+{
+    _isActive = false;
+    // TODO
 }
