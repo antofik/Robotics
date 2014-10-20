@@ -1,6 +1,7 @@
 #include "lidar.h"
 #include "datafilereader.h"
 #include "serialreader.h"
+#include "Arduino.h"
 
 Lidar::Lidar(QObject *parent) : QObject(parent)
 {
@@ -32,7 +33,10 @@ void Lidar::start_from_file()
 
 void Lidar::stop()
 {
-    // TODO: stop
+#ifdef Q_OS_LINUX
+    LidarMotor->smcSetTargetSpeed(0);
+    delete LidarMotor;
+#endif
 }
 
 int Lidar::checksum(int data[])

@@ -7,5 +7,6 @@ SUBDIRS += \
     WheelMotorController \
     WheelMotorControllerTest \
     MovementLibraryTest \
-    Robot
+    Robot \
+    LidarLibraryTest
 
