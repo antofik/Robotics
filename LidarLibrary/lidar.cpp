@@ -5,6 +5,10 @@
 
 Lidar::Lidar(QObject *parent) : QObject(parent)
 {
+    LidarMotor = 0;
+    serial_reader = 0;
+    data_file_reader = 0;
+
     static QThread thread;
     moveToThread(&thread);
     thread.start();
@@ -12,31 +16,40 @@ Lidar::Lidar(QObject *parent) : QObject(parent)
 
 void Lidar::start_from_serial()
 {
-#ifdef Q_OS_LINUX
-    const char * device = "/dev/ttyACM4";
-    LidarMotor = new SMC(device);
+    if (LidarMotor == 0) {
+        const char * device = "/dev/ttyACM4";
+        LidarMotor = new SMC(device);
+    }
     LidarMotor->smcExitSafeStart();
     LidarMotor->smcSetTargetSpeed(820); //TODO control motor
-#endif
 
-    serialreader *reader = new serialreader();
-    connect(reader, SIGNAL(read(int,int)), this, SLOT(read(int,int)));    
-    QTimer::singleShot(0, reader, SIGNAL(start()));
+
+    if (serial_reader == 0) {
+        serial_reader = new serialreader();
+        connect(serial_reader, SIGNAL(read(int,int)), this, SLOT(read(int,int)));
+    }
+    QTimer::singleShot(0, serial_reader, SIGNAL(start()));
 }
 
 void Lidar::start_from_file()
 {
-    datafilereader *reader = new datafilereader();
-    connect(reader, SIGNAL(read(int,int)), this, SLOT(read(int,int)));
-    QTimer::singleShot(0, reader, SIGNAL(start()));
+    if (data_file_reader == 0) {
+        data_file_reader = new datafilereader();
+        data_file_reader->datafile = "data.bin";
+        connect(data_file_reader, SIGNAL(read(int,int)), this, SLOT(read(int,int)));
+    }
+    QTimer::singleShot(0, data_file_reader, SIGNAL(start()));
 }
 
 void Lidar::stop()
 {
-#ifdef Q_OS_LINUX
-    LidarMotor->smcSetTargetSpeed(0);
-    delete LidarMotor;
-#endif
+    if (!started) return;
+    if (serial) {
+        LidarMotor->smcSetTargetSpeed(0);
+        QTimer::singleShot(0, serial_reader, SIGNAL(stop()));
+    } else {
+        QTimer::singleShot(0, data_file_reader, SIGNAL(stop()));
+    }
 }
 
 int Lidar::checksum(int data[])
@@ -98,4 +111,14 @@ void Lidar::read(int index, int value)
     if (pointer < length)
         packet[pointer] = value;
     pointer++;
+}
+
+void Lidar::start_record(QString filename)
+{
+    serial_reader->start_record(filename);
+}
+
+void Lidar::stop_record()
+{
+    serial_reader->stop_record();
 }

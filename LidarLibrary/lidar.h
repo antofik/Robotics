@@ -8,11 +8,9 @@
 #include <QThread>
 #include <iostream>
 #include <fstream>
-
-#ifdef Q_OS_LINUX
 #include "smc.h"
-#endif
-
+#include "serialreader.h"
+#include "datafilereader.h"
 
 class Lidar : public QObject
 {
@@ -20,6 +18,8 @@ class Lidar : public QObject
 public:
     explicit Lidar(QObject *parent = 0);
     int distance[360];
+    void start_record(QString filename);
+    void stop_record();
 
 signals:
     void data(int,int,int,int,int,int);
@@ -37,10 +37,11 @@ private:
     bool from_file;
     FILE* file;
     int checksum(int data[]);
-#ifdef Q_OS_LINUX
+    bool started;
+    bool serial;
+    serialreader* serial_reader;
+    datafilereader* data_file_reader;
     SMC *LidarMotor;
-#endif
-
 };
 
 #endif // LIDARREADER_H

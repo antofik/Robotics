@@ -15,7 +15,7 @@ datafilereader::datafilereader(QObject *parent) :
 
 void datafilereader::start()
 {
-    std::ifstream file("data.bin", std::ios::binary|std::ios::ate);
+    std::ifstream file(datafile.toLocal8Bit(), std::ios::binary|std::ios::ate);
     if (file.is_open())
     {
         std::streampos size;
@@ -39,4 +39,8 @@ void datafilereader::start()
         std::cout << "\n\n\nBinary file not found!\nChange path in file <datafilereader.cpp>\n";
         std::cout.flush();
     }
+}
+
+void datafilereader::stop(){
+    //todo
 }

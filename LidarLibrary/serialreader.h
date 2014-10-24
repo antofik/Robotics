@@ -8,16 +8,20 @@ class serialreader : public QObject
     Q_OBJECT
 public:
     explicit serialreader(QObject *parent = 0);    
-    void stop();
+    void start_record(QString filename);
+    void stop_record();
 
 signals:
     void read(int index, int value);
 
 public slots:
     void start();
+    void stop();
 
 private:
     bool running;
+    QString filename;
+    bool record;
 
 };
 
