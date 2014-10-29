@@ -7,6 +7,7 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h
 FORMS    += mainwindow.ui
+DEFINES += ARDUINO
 
 ############################ Lidar Library #################################################################################
 
@@ -34,5 +35,5 @@ SOURCES += ../ThirdParty/smc-wrapper/smc.cpp
 HEADERS += ../ThirdParty/smc-wrapper/smc.h
 
 #PRE_TARGETDEPS += $$OUT_PWD/../ThirdParty/c_environment/libarduino.a
-#LIBS += /home/anton/Robotics/ThirdParty/c_environment/libarduino.so
+LIBS += /home/anton/Robotics/ThirdParty/c_environment/libarduino.so
 INCLUDEPATH += /usr/include/

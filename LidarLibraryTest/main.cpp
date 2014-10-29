@@ -1,5 +1,3 @@
-//#define ARDUINO
-
 #include "mainwindow.h"
 #include <QApplication>
 #include "Arduino.h"
@@ -14,10 +12,6 @@ int main(int argc, char *argv[])
     return a.exec();
 }
 
-#ifdef ARDUINO
-
 void setup(){}
 
 void loop() {}
-
-#endif
