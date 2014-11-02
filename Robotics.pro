@@ -3,6 +3,7 @@ TEMPLATE = subdirs
 SUBDIRS += \
     LidarLibrary \
     PuckController \
+    PuckControllerTest \
     WheelMotorController \
     WheelMotorControllerTest \
     MovementLibrary \
