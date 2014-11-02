@@ -2,12 +2,17 @@
 #include "datafilereader.h"
 #include "serialreader.h"
 #include "Arduino.h"
+#include <QSettings>
 
 Lidar::Lidar(QObject *parent) : QObject(parent)
 {
+    qDebug() << "Lidar instance created";
     LidarMotor = 0;
     serial_reader = 0;
     data_file_reader = 0;
+
+    QSettings settings;
+    settings.setValue("test", 43);
 
     static QThread thread;
     moveToThread(&thread);
