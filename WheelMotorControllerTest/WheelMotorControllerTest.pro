@@ -29,3 +29,7 @@ else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/
 else:unix:!macx: PRE_TARGETDEPS += $$OUT_PWD/../WheelMotorController/libWheelMotorController.a
 
 #####################################################################
+INCLUDEPATH += ../ThirdParty/smc-wrapper
+
+SOURCES += ../ThirdParty/smc-wrapper/smc.cpp
+HEADERS += ../ThirdParty/smc-wrapper/smc.h

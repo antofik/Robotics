@@ -13,6 +13,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->controller = new WheelMotorController();
     ui->statusBar->showMessage("ready");
+
+    smc = new SMC("/dev/ttyACM0");
+    smc->smcExitSafeStart();
+    smc->smcSetTargetSpeed(5000);
 }
 
 MainWindow::~MainWindow()
